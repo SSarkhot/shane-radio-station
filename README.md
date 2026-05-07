@@ -27,9 +27,29 @@
    - Gutenberg block
    - Classic widget
 
-4. Player styling system
+4. Player settings
    - Responsive player container
    - Background image support
    - Equalizer animation
    - Multiple players
    - Player skins
+   - Optional metadata support
+     - Admin can add a private metadata API URL
+     - API URL is stored in WordPress options
+     - Frontend does not expose the API URL
+     - WordPress fetches metadata server-side
+     - Frontend receives only safe fields:
+       - song title
+       - artist
+     - Display metadata under show details
+
+## Security
+Frontend JS
+   ↓
+Calls our WordPress AJAX/REST endpoint
+   ↓
+WordPress server fetches private metadata API URL
+   ↓
+WordPress returns only cleaned metadata
+   ↓
+Frontend never sees the real metadata API URL
