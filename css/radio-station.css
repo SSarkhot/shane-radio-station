@@ -13,3 +13,8 @@
 .shane-radio-station-player audio {
     width: 100%;
 }
+
+.shane-radio-station-description {
+    margin-bottom: 15px;
+    opacity: 0.8;
+}

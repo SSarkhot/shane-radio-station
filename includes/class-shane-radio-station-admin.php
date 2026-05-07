@@ -25,50 +25,124 @@ class Shane_Radio_Station_Admin {
         'shane_radio_station_settings_group',
         'shane_radio_station_stream_url',
         array(
-            
+
             'sanitize_callback' => 'esc_url_raw',
             
             )
         );
-    }
+        register_setting(
+    'shane_radio_station_settings_group',
+    'shane_radio_station_name',
+    array(
+        'sanitize_callback' => 'sanitize_text_field',
+    
+            )
+        );
+
+        register_setting(
+    'shane_radio_station_settings_group',
+    'shane_radio_station_description',
+    array(
+        'sanitize_callback' => 'sanitize_textarea_field',
+            )
+        );
+    
+        }
 
     public function settings_page() {
-        ?>
+    ?>
 
-        <div class="wrap">
+    <div class="wrap">
 
-            <h1>Shane Radio Station Settings</h1>
+        <h1>Shane Radio Station Settings</h1>
 
-            <form method="post" action="options.php">
+        <p>
+            Add your live stream URL below. Then place the shortcode on any page or post.
+        </p>
 
-                <?php
-                settings_fields('shane_radio_station_settings_group');
-                do_settings_sections('shane_radio_station_settings_group');
-                ?>
+        <form method="post" action="options.php">
 
-                <table class="form-table">
+            <?php
+            settings_fields('shane_radio_station_settings_group');
+            do_settings_sections('shane_radio_station_settings_group');
+            ?>
 
-                    <tr>
-                        <th scope="row">Stream URL</th>
+            <table class="form-table">
+            <tr>
+                    <th scope="row">Station Name</th>
 
-                        <td>
-                            <input
-                                type="text"
-                                name="shane_radio_station_stream_url"
-                                value="<?php echo esc_attr(get_option('shane_radio_station_stream_url')); ?>"
-                                class="regular-text"
-                            >
-                        </td>
-                    </tr>
+                    <td>
+                        <input
+                            type="text"
+                            name="shane_radio_station_name"
+                            value="<?php echo esc_attr(get_option('shane_radio_station_name', 'Shane Radio Station')); ?>"
+                            class="regular-text"
+                            placeholder="Leave empty to hide Station Name"
+                        >
 
-                </table>
+                        <p class="description">
+                            This name will appear above the audio player.
+                        </p>
+                    </td>
+                </tr>
+            <tr>
 
-                <?php submit_button(); ?>
+                <tr>
+                    <th scope="row">Station Description</th>
 
-            </form>
+                    <td>
+                        <textarea
+                            name="shane_radio_station_description"
+                            class="large-text"
+                            rows="3"
+                            placeholder="Live music, 24/7."
+                        ><?php echo esc_textarea(get_option('shane_radio_station_description')); ?></textarea>
 
-        </div>
+                        <p class="description">
+                            Optional text shown below the station name.
+                        </p>
+                    </td>
+                </tr>
 
-        <?php
+                    <th scope="row">Stream URL</th>
+
+                    <td>
+                        <input
+                            type="text"
+                            name="shane_radio_station_stream_url"
+                            value="<?php echo esc_attr(get_option('shane_radio_station_stream_url')); ?>"
+                            class="regular-text"
+                            placeholder="https://example.com/live-stream.mp3"
+                        >
+
+                        <p class="description">
+                            Supports MP3, AAC, and HLS .m3u8 stream URLs.
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+
+            <?php submit_button(); ?>
+
+        </form>
+
+        <hr>
+
+        <h2>Shortcode</h2>
+
+        <p>Use this shortcode to display the radio player:</p>
+
+        <code>[shane_radio_station]</code>
+
+        <h2>Test Stream</h2>
+
+        <p>You can use this test stream while developing:</p>
+
+        <code>https://streams.radiomast.io/ref-128k-mp3-stereo</code>
+
+    </div>
+
+     <?php
     }
 }

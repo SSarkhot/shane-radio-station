@@ -10,13 +10,28 @@ class Shane_Radio_Station_Shortcode {
 
         $stream_url = get_option('shane_radio_station_stream_url');
         $stream_type = $this->get_stream_type($stream_url);
-
+        $station_name = get_option('shane_radio_station_name');
+        $station_description = get_option('shane_radio_station_description');
         ob_start();
         ?>
 
         <div class="shane-radio-station-player">
+            
+        <!-- Station Name -->
 
-            <h3>Shane Radio Station</h3>
+            <?php if (!empty($station_name)) : ?>
+                <h3><?php echo esc_html($station_name); ?></h3>
+            <?php endif; ?>
+                        
+        <!-- Description -->
+         
+            <?php if (!empty($station_description)) : ?>
+                <p class="shane-radio-station-description">
+            <?php echo esc_html($station_description); ?>
+                </p>
+            <?php endif; ?>
+        
+        <!-- Stream -->
 
             <?php if (!empty($stream_url)) : ?>
 
